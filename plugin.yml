@@ -1,0 +1,10 @@
+main: fr.futuro.main.Main
+name: Roulette
+version: 1.0
+author: futuro
+api-version: 1.16
+commands:
+  coins:
+    aliases: [money]
+  roulette:
+    aliases: [roll,play]
