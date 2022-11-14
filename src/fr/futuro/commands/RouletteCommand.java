@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.futuro.main.Main;
 import fr.futuro.mysql.PlayerInfo;
 import fr.futuro.mysql.PlayersData;
 
@@ -14,8 +15,7 @@ public class RouletteCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(sender instanceof Player) {
 			Player player = (Player)sender;
-			PlayerInfo data = new PlayerInfo(player);
-			player.sendMessage("§6Vous avez §e" + data.getCoinsNumber() +" §6coins");
+			player.sendMessage("§6Vous avez §e" + Main.coinsMap.getOrDefault(player,0.0f) +" §6coins");
 		}
 		return false;
 	}

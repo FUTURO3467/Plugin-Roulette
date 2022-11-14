@@ -43,7 +43,7 @@ public class CoinsCommand implements CommandExecutor, Listener{
 			float mise = 0.0f;
 			
 			String miseStr = args[0];
-			float coins = Main.coinsMap.get(player);
+			float coins = Main.coinsMap.getOrDefault(player,0.0f);
 			
 			if(miseStr.equalsIgnoreCase("all")) {
 				mise = coins;
