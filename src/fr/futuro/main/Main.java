@@ -1,5 +1,9 @@
 package fr.futuro.main;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.futuro.commands.CoinsCommand;
@@ -9,6 +13,8 @@ import fr.futuro.mysql.DatabaseManager;
 public class Main extends JavaPlugin {
 	
 	public static DatabaseManager manager;
+	
+	public static final Map<Player,Float> coinsMap = new HashMap<>();
 	
 	@Override
 	public void onEnable() {
@@ -22,5 +28,6 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		manager.deconnexion();
+		coinsMap.clear();
 	}
 }

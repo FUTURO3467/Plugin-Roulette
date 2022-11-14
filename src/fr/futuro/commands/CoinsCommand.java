@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -39,11 +40,10 @@ public class CoinsCommand implements CommandExecutor, Listener{
 		}
 		if(sender instanceof Player) {
 			Player player = (Player)sender;
-			PlayerInfo data = new PlayerInfo(player);
 			float mise = 0.0f;
 			
 			String miseStr = args[0];
-			float coins = data.getCoinsNumber();
+			float coins = Main.coinsMap.get(player);
 			
 			if(miseStr.equalsIgnoreCase("all")) {
 				mise = coins;
@@ -97,7 +97,6 @@ public class CoinsCommand implements CommandExecutor, Listener{
 		if(!invMap.get(p).getInventory().equals(event.getClickedInventory()))return;
 		event.setCancelled(true);
 		if(event.getSlot() != ROULETTE_SLOT)return;
-		PlayerInfo data = new PlayerInfo(p);
 		
 		Random random = new Random();
 		
@@ -112,7 +111,7 @@ public class CoinsCommand implements CommandExecutor, Listener{
 		}else {
 			p.sendMessage("§4Vous avez perdu §e" + Math.abs(result) +"% §4de votre mise soit §e" + toAdd +" §4coins");
 		}
-		data.addCoins(toAdd);
+		Main.coinsMap.put(p, Main.coinsMap.get(p)+toAdd);
 		p.closeInventory();
 	}
 	@EventHandler
@@ -120,6 +119,15 @@ public class CoinsCommand implements CommandExecutor, Listener{
 		if(!Main.manager.hasAccount(event.getPlayer().getUniqueId())) {
 			Main.manager.createAccount(event.getPlayer().getUniqueId());
 		}
+		PlayerInfo info = new PlayerInfo(event.getPlayer());
+		Main.coinsMap.put(event.getPlayer(), info.getCoinsNumber());
+	}
+	
+	@EventHandler
+	public void onDisconnect(PlayerQuitEvent event) {
+		PlayerInfo info = new PlayerInfo(event.getPlayer());
+		info.setCoinsNumber(Main.coinsMap.get(event.getPlayer()));
+		Main.coinsMap.remove(event.getPlayer());
 	}
 
 }

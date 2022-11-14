@@ -29,10 +29,21 @@ public class PlayersData {
 		}
 	}
 	
+	public void setCoins(float amount) {
+		try {
+			
+			PreparedStatement prepareStatement = (PreparedStatement) DatabaseManager.getConnection().prepareStatement("UPDATE players SET coins = ? WHERE uuid_player = ?");
+			prepareStatement.setFloat(1, amount);
+			prepareStatement.setString(2, uuid.toString());
+			prepareStatement.executeUpdate();
+			prepareStatement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void removeCoins(float amount) {
-	try {
-			
+		try {
 			PreparedStatement prepareStatement = (PreparedStatement) DatabaseManager.getConnection().prepareStatement("UPDATE players SET coins = coins - ? WHERE uuid_player = ?");
 			prepareStatement.setFloat(1, amount);
 			prepareStatement.setString(2, uuid.toString());

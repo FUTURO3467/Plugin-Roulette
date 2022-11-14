@@ -20,7 +20,7 @@ public class PlayerInfo {
 		return playerinfo.get(player);
 	}
 
-	public OfflinePlayer getplayer() {
+	public OfflinePlayer getPlayer() {
 		return player;
 	}
 	
@@ -29,6 +29,9 @@ public class PlayerInfo {
 	}
 	public float getCoinsNumber() {
 		return playerData.getcoins();
+	}
+	public void setCoinsNumber(float amount) {
+		playerData.setCoins(amount);
 	}
 	public void addCoins(float amount) {
 		playerData.addCoins(amount);
